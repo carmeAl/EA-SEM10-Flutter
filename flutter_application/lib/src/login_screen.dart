@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_application/src/list_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,6 +13,8 @@ class _LoginScreenState extends State<LoginScreen> {
   late String _nombre;
   late String _email;
   late String _password;
+  final passwordController=TextEditingController();
+  final emailController=TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -54,28 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               TextField(
-                enableInteractiveSelection: false,
-                autofocus: true,
-                textCapitalization: TextCapitalization.characters,
-                decoration: InputDecoration(
-                  hintText: 'USER-NAME',
-                  labelText: 'User name',
-                  suffixIcon: const Icon(
-                    Icons.login
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0)
-                  )
-                ),
-                onSubmitted: (valor){
-                  _nombre=valor;
-                  print('El nombre es $_nombre');
-                },
-              ),
-              const Divider(
-                height: 18.0,
-              ),
-              TextField(
+                controller: emailController,
                 decoration: InputDecoration(
                   hintText: 'Email',
                   labelText: 'Email',
@@ -95,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 18.0,
               ),
               TextField(
+                controller:passwordController,
                 enableInteractiveSelection: true,
                 obscureText: true,
                 decoration: InputDecoration(
@@ -126,7 +110,18 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontSize: 30.0, 
                     )
                   ),
-                  onPressed: () { 
+                  onPressed: () async { 
+                    try{var response=await Dio().post("http://192.168.152.104:3000/auth/login",data:
+                    {"email":emailController.text,"password":passwordController.text});
+                    if(response.statusCode==200){
+                      Navigator.of(context).push(MaterialPageRoute<void>(builder: (BuildContext context){
+                        return const ListScreen();
+                      }));
+                    }}
+                    catch(e){
+                      print("Error"+e.toString());
+                    }
+                    
                     print('diste clic');
                   },
                   child: const Text('Sign in'),
