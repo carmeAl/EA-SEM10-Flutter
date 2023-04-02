@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     )
                   ),
                   onPressed: () async { 
-                    try{var response=await Dio().post("http://192.168.152.104:3000/auth/login",data:
+                    try{var response=await Dio().post("http://192.168.1.54:3000/auth/login",data:
                     {"email":emailController.text,"password":passwordController.text});
                     if(response.statusCode==200){
                       Navigator.of(context).push(MaterialPageRoute<void>(builder: (BuildContext context){

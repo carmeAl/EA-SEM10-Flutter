@@ -26,7 +26,7 @@ class _ListScreenState extends State<ListScreen> {
 
   Future getSubjects() async{
     //http://IP_PC:3000/subject/all
-    String path='http://192.168.152.104:3000/subject/all';
+    String path='http://192.168.1.54:3000/subject/all';
     var response=await Dio().get(path);
     var registros=response.data as List;
     for(var sub in registros){
@@ -36,6 +36,19 @@ class _ListScreenState extends State<ListScreen> {
       subjectList=subjectList;
     });
   }
+
+  Future deleteSubject(String idSubject) async{
+    //http://IP_PC:3000/subject/all
+    String path='http://192.168.1.54:3000/subject/$idSubject';
+    var response=await Dio().delete(path);
+    if(response.statusCode==200){
+      print('Subject deleted');
+    }
+    else{
+      print('Ha habido un error con la eliminación del Subject');
+    }
+  }
+
   
   @override
   Widget build(BuildContext context) {
@@ -47,26 +60,38 @@ class _ListScreenState extends State<ListScreen> {
         Expanded(child: ListView.builder(
           itemCount: subjectList.length,
           itemBuilder: (BuildContext context,int index){
-            return Container(
-              padding: EdgeInsets.all(15),
-              decoration: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: Colors.blue,
-                    width: 1
-                  )
+            return Card(
+              color: Colors.deepOrange,
+              child: Padding(
+                padding: const EdgeInsets.all(14.0),
+                child:ListTile(
+                  title: Text(subjectList[index].name,
+                style: const TextStyle(
+                  fontSize: 30.0)),
+                  subtitle: Text(subjectList[index].difficulty,
+                style: const TextStyle(
+                  fontSize: 20.0)),
+                  trailing: Container(
+                    width:70,
+                    child: Row(
+                      children: [
+                        IconButton(onPressed: (){
+                          setState(() {
+                            deleteSubject(subjectList[index].id);
+                            subjectList.removeAt(index);
+                            
+                          });
+                        }, icon: const Icon(Icons.delete))
+                      ],
+                    ),
+                  ),
                 )
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(subjectList[index].name,style:const TextStyle(fontSize: 16),),
-                  Text(subjectList[index].difficulty,style: TextStyle(fontSize: 14,color: Colors.green),)
-                ],
-              ),
             );
-          })
+          }),
+          
     )]),
     );
   }
 }
+
