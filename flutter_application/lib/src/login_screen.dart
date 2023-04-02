@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_application/src/list_screen.dart';
@@ -8,7 +10,6 @@ class LoginScreen extends StatefulWidget {
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
-
 class _LoginScreenState extends State<LoginScreen> {
   late String _nombre;
   late String _email;
@@ -19,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey[100],
+      backgroundColor: Color.fromARGB(255, 156, 216, 242),
       body: ListView(
         padding: const EdgeInsets.symmetric(
           horizontal: 30.0,
@@ -43,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               ),
               const Text(
-                'Ingrese sus credenciales',
+                'Introduce your credentials',
                 style: TextStyle(
                   fontFamily: 'NerkoOne',
                   fontSize: 20.0
@@ -104,31 +105,44 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: TextButton(
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.white,
-                    backgroundColor: Colors.lightBlueAccent,
+                    backgroundColor:  Color.fromRGBO(0, 0, 128,4),
                     textStyle: const TextStyle(
                       fontFamily: 'NerkoOne',
                       fontSize: 30.0, 
                     )
                   ),
                   onPressed: () async { 
-                    try{var response=await Dio().post("http://192.168.1.54:3000/auth/login",data:
-                    {"email":emailController.text,"password":passwordController.text});
-                    if(response.statusCode==200){
-                      Navigator.of(context).push(MaterialPageRoute<void>(builder: (BuildContext context){
-                        return const ListScreen();
-                      }));
-                    }}
+                    try{
+                      var response=await Dio().post("http://192.168.56.1:3002/auth/login",data:
+                      {"email":emailController.text,"password":passwordController.text});
+                      if(response.statusCode==200){
+                        Navigator.pushNamed(context, '/list_screen');
+                      }
+                      else if (response.statusCode==403){
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Wrong credentials!'),
+                          ),
+                        );
+                      }
+                    }
                     catch(e){
                       print("Error"+e.toString());
                     }
-                    
-                    print('diste clic');
                   },
                   child: const Text('Sign in'),
-                  )
-                  
+                  ) 
               ),
-              
+              SizedBox(height: 10),
+              Text("Are you a new user? Create an account!", style: TextStyle(
+                  fontFamily: 'NerkoOne',
+                  fontSize: 20.0
+                ),),
+              ElevatedButton(onPressed: (){Navigator.pushNamed(context, '/register_screen');},style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(0, 0, 128,4))), child: Text("Register", style: TextStyle(
+                  fontFamily: 'NerkoOne',
+                  fontSize: 20.0
+                ),),)
+                
             ],
           )
         ]
@@ -136,4 +150,5 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+  
 }

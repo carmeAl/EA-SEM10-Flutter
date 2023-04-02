@@ -26,7 +26,7 @@ class _ListScreenState extends State<ListScreen> {
 
   Future getSubjects() async{
     //http://IP_PC:3000/subject/all
-    String path='http://192.168.1.54:3000/subject/all';
+    String path='http://192.168.56.1:3002/subject/all';
     var response=await Dio().get(path);
     var registros=response.data as List;
     for(var sub in registros){
@@ -39,7 +39,7 @@ class _ListScreenState extends State<ListScreen> {
 
   Future deleteSubject(String idSubject) async{
     //http://IP_PC:3000/subject/all
-    String path='http://192.168.1.54:3000/subject/$idSubject';
+    String path='http://192.168.56.1:3002/subject/$idSubject';
     var response=await Dio().delete(path);
     if(response.statusCode==200){
       print('Subject deleted');
@@ -55,13 +55,15 @@ class _ListScreenState extends State<ListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Subjects'),
+        shadowColor: Color.fromRGBO(0, 0, 128,4),
+        backgroundColor:  Color.fromRGBO(0, 0, 128,4),
       ),
       body: Column(children: [
         Expanded(child: ListView.builder(
           itemCount: subjectList.length,
           itemBuilder: (BuildContext context,int index){
             return Card(
-              color: Colors.deepOrange,
+              color: Color.fromARGB(255, 197, 162, 226),
               child: Padding(
                 padding: const EdgeInsets.all(14.0),
                 child:ListTile(
