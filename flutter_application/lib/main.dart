@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/src/info_screen.dart';
 import 'package:flutter_application/src/list_screen.dart';
 import 'package:flutter_application/src/login_screen.dart';
 import 'package:flutter_application/src/register_screen.dart';
@@ -21,6 +22,9 @@ class MyApp extends StatelessWidget {
             return MaterialPageRoute(builder: (context) => ListScreen());
           case '/register_screen':
             return MaterialPageRoute(builder: (context) => RegisterScreen());
+          case '/info_screen':
+            return MaterialPageRoute(builder: (context)=> InfoScreen());
+    
           default: 
             return MaterialPageRoute(builder: (context) => LoginScreen());
         }

@@ -103,7 +103,7 @@ class RegisterScreen extends StatelessWidget {
                       )),
                   onPressed: () async {
                     var response = await Dio()
-                        .post("http://192.168.1.54:3000/auth/register", data: {
+                        .post("http://192.168.56.1:3002/auth/register", data: {
                       "name": nameController.text,
                       "surname": surnameController.text,
                       "email": emailController.text,
@@ -127,7 +127,7 @@ class RegisterScreen extends StatelessWidget {
 
   Future register(
       String name, String surname, String email, String password) async {
-    var response = await Dio().post("http://192.168.1.54:3002/auth/login",
+    var response = await Dio().post("http://192.168.56.1:3002/auth/login",
         data: {
           "name": name,
           "surname": surname,

@@ -23,7 +23,7 @@ class _ListScreenState extends State<ListScreen> {
 
   Future getSubjects() async {
     //http://IP_PC:3000/subject/all
-    String path = 'http://192.168.1.54:3000/subject/all';
+    String path = 'http://192.168.56.1:3002/subject/all';
     var response = await Dio().get(path);
     var registros = response.data as List;
     for (var sub in registros) {
@@ -36,7 +36,7 @@ class _ListScreenState extends State<ListScreen> {
 
   Future deleteSubject(String idSubject) async {
     //http://IP_PC:3000/subject/all
-    String path = 'http://192.168.1.54:3000/subject/$idSubject';
+    String path = 'http://192.168.56.1:3002/subject/$idSubject';
     var response = await Dio().delete(path);
     if (response.statusCode == 200) {
       print('Subject deleted');
@@ -48,6 +48,38 @@ class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: Container(
+          color: Color.fromARGB(255, 255, 255, 255),
+          child: Column(
+            children: [
+              DrawerHeader(child: Column(children: [Expanded(child: Image.network("https://cdn-icons-png.flaticon.com/512/6522/6522516.png")),Text("EA") ,SizedBox(height: 10,width: 100)],)),
+                ListTile(
+                
+                  leading: Icon(Icons.person),
+                  title: Text('Profile'),
+                  onTap: (){
+
+                  }
+                ),
+                ListTile(
+                  leading: Icon(Icons.info),
+                  title: Text('Information of the app'),
+                  onTap: (){
+                    Navigator.pushNamed(context, '/info_screen');
+                  }
+                ),
+                ListTile(
+                  leading: Icon(Icons.logout),
+                  title: Text('Log out'),
+                  onTap: (){
+                    Navigator.pushNamed(context, '/');
+                  }
+                ),
+                ],
+              )
+        ),
+      ),
       appBar: AppBar(
         title: Text('Subjects'),
         shadowColor: Color.fromRGBO(0, 0, 128, 4),

@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () async {
                         try {
                           var response = await Dio().post(
-                              "http://192.168.1.54:3000/auth/login",
+                              "http://192.168.56.1:3002/auth/login",
                               data: {
                                 "email": emailController.text,
                                 "password": passwordController.text
