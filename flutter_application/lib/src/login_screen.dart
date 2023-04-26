@@ -11,6 +11,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late String idUser="";
   late String _nombre;
   late String _email;
   late String _password;
@@ -94,7 +95,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 "password": passwordController.text
                               });
                           if (response.statusCode == 200) {
+                         
                             Navigator.pushNamed(context, '/list_screen');
+                            //final idUserSaved=Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){return new ListScreen(idUser);}));
                           } else if (response.statusCode == 403) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(

@@ -7,14 +7,11 @@ import 'package:flutter_application/infrastructure/models/subject.dart';
 
 
 class InfoScreen extends StatelessWidget {
-  final nameController = TextEditingController();
-  final surnameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 156, 216, 242),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
           title: Text('INFORMATION'),
           shadowColor: Color.fromRGBO(0, 0, 128, 4),

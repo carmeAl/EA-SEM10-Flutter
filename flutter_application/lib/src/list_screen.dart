@@ -5,8 +5,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter_application/infrastructure/models/subject.dart';
 
 class ListScreen extends StatefulWidget {
+  //late String idUser;
   const ListScreen({super.key});
-
+  
   @override
   State<ListScreen> createState() => _ListScreenState();
 }
@@ -59,6 +60,7 @@ class _ListScreenState extends State<ListScreen> {
                   leading: Icon(Icons.person),
                   title: Text('Profile'),
                   onTap: (){
+                    Navigator.pushNamed(context, '/profile_screen');
 
                   }
                 ),
